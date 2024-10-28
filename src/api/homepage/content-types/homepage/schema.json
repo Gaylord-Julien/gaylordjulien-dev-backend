@@ -23,6 +23,17 @@
       "type": "component",
       "repeatable": true,
       "component": "homepage.intro"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "trust": {
+      "displayName": "trust",
+      "type": "component",
+      "repeatable": true,
+      "component": "homepage.trust"
     }
   }
 }

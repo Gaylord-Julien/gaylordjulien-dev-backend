@@ -14,6 +14,8 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   attributes: {
     header: Schema.Attribute.Component<'homepage.header', false>;
     intro: Schema.Attribute.Component<'homepage.intro', true>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    trust: Schema.Attribute.Component<'homepage.trust', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -25,6 +27,38 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::homepage.homepage'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMessageMessage extends Struct.CollectionTypeSchema {
+  collectionName: 'messages';
+  info: {
+    singularName: 'message';
+    pluralName: 'messages';
+    displayName: 'message';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    firstName: Schema.Attribute.String & Schema.Attribute.Required;
+    lastName: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    message: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::message.message'
     > &
       Schema.Attribute.Private;
   };
@@ -898,6 +932,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ContentTypeSchemas {
       'api::homepage.homepage': ApiHomepageHomepage;
+      'api::message.message': ApiMessageMessage;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
