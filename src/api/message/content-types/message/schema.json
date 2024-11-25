@@ -4,7 +4,8 @@
   "info": {
     "singularName": "message",
     "pluralName": "messages",
-    "displayName": "message"
+    "displayName": "message",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -28,6 +29,15 @@
     },
     "message": {
       "type": "text",
+      "required": true
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "F",
+        "M",
+        "O"
+      ],
       "required": true
     }
   }
