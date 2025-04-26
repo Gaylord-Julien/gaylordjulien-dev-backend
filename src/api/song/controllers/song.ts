@@ -1,7 +1,3 @@
-/**
- * song controller
- */
-
 import {factories} from '@strapi/strapi'
 import dayjs from 'dayjs-with-plugins'
 
@@ -11,37 +7,27 @@ export default factories.createCoreController('api::song.song', ({strapi}) => {
             const TZ = 'America/Guadeloupe'
             const now = dayjs().tz(TZ)
 
-            // current Guadeloupe date & time
+            // Current Guadeloupe date & time
             const guadeloupeDate = now.format('YYYY-MM-DD')
             const guadeloupeTime = now.format('HH:mm:ss')
 
-            // 1) is today May 4th? (month() is zero-based: 0=Jan, …, 4=May)
-            const isTodayMay4th = now.month() === 4 && now.date() === 4
+            // Target: May 4th at 14:30
+            const month = 4    // May (0-based)
+            const day = 4
+            const hour = 14
+            const minute = 30
 
-            // 2) is it 14:30 or later?
+            // Is it already ≥ 14:30 on May 4th?
+            const isTodayMay4th = now.month() === month && now.date() === day
             const after2h30 =
-                now.hour() > 14 ||
-                (now.hour() === 14 && now.minute() >= 30)
+                now.hour() > hour ||
+                (now.hour() === hour && now.minute() >= minute)
 
             const isVisible = isTodayMay4th && after2h30
 
-            // build the reveal‐time for THIS year at 2025-05-04 14:30
-            let reveal = dayjs
-                .tz({
-                    year: now.year(),
-                    month: 4,      // May
-                    date: 4,
-                    hour: 14,
-                    minute: 30,
-                    second: 0,
-                    millisecond: 0,
-                }, TZ)
-
-            // if we’re already past this year’s reveal, bump to next year
-            if (now.isAfter(reveal)) {
-                reveal = reveal.add(1, 'year')
-            }
-
+            // Build the reveal timestamp for THIS YEAR in Guadeloupe
+            const stamp = `${now.year()}-${month + 1}-${day}T${hour}:${minute}:00`
+            const reveal = dayjs.tz(stamp, TZ)
             const timeLeft = reveal.diff(now, 'seconds')
 
             return ctx.send({
