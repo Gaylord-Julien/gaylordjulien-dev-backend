@@ -25,12 +25,5 @@ module.exports = ({env}) => ({
     "strapi-plugin-placeholder": {
         enabled: true,
         resolve: "./node_modules/strapi-plugin-placeholder",
-        config: {
-            endpoint: env("MINIO_ENDPOINT"),
-            accessKey: env("MINIO_ACCESS_KEY"),
-            secretKey: env("MINIO_SECRET_KEY"),
-            bucket: env("MINIO_BUCKET"),
-            forcePathStyle: true,
-        },
     },
 });
