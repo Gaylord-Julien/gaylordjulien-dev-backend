@@ -469,6 +469,7 @@ export interface ApiSettingSetting extends Struct.SingleTypeSchema {
 export interface ApiSongSong extends Struct.CollectionTypeSchema {
   collectionName: 'songs';
   info: {
+    description: '';
     displayName: 'song';
     pluralName: 'songs';
     singularName: 'song';
@@ -480,6 +481,7 @@ export interface ApiSongSong extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::song.song'> &
       Schema.Attribute.Private;
