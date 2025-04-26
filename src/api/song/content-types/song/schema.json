@@ -25,6 +25,9 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "displayName": {
+      "type": "string"
     }
   }
 }
